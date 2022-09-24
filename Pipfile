@@ -9,6 +9,8 @@ pymysql = "*"
 mysql = "*"
 django = "*"
 mysqlclient = "*"
+django-debug-panel = "*"
+djangorestframework = "*"
 
 [dev-packages]
 autopep8 = "*"
