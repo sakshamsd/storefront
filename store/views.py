@@ -10,25 +10,15 @@ from django.db.models import Count
 from rest_framework.views import APIView
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-# Create your views here.
+from rest_framework.viewsets import ModelViewSet
 
 
-class ProductList(ListCreateAPIView):
-    # def get_queryset(self):
-    #     return Product.objects.select_related('collection').all()
-
-    # def get_serializer_class():
-    #     return ProductSerializer
-    queryset = Product.objects.select_related('collection').all()
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
     def get_serializer_context(self):
         return {'request': self.request}
-
-
-class ProductDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
     def delete(self, request, pk):
         product = get_object_or_404(Product, pk=pk)
@@ -38,13 +28,7 @@ class ProductDetail(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CollectionList(ListCreateAPIView):
-    queryset = Collection.objects.annotate(
-        product_count=Count('product')).all()
-    serializer_class = CollectionSerializer
-
-
-class CollectionDetail(RetrieveUpdateDestroyAPIView):
+class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(
         product_count=Count('product')).all()
     serializer_class = CollectionSerializer
