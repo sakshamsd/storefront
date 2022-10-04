@@ -11,6 +11,8 @@ django = "*"
 mysqlclient = "*"
 django-debug-panel = "*"
 djangorestframework = "*"
+drf-nested-routers = "*"
+django-filter = "*"
 
 [dev-packages]
 autopep8 = "*"
